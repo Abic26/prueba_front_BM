@@ -7,6 +7,8 @@ import {
   Chip,
 } from "@material-tailwind/react";
 import { getAttendanceAll } from '../services/apiService.js';
+import Logout from "./Logout";
+
 const TABLE_HEAD = ["Nombre del empleado", "Hora de Llegada", "Fecha de Llegada", "¿Llegó Tarde?"];
 
 // Helper function to determine if arrival is late
@@ -55,6 +57,9 @@ export default function SortableTable() {
 
   return (
     <div className="pt-16">
+      <div className=" px-3">
+        <Logout />
+      </div>
       <Card className="h-full w-full">
         <CardHeader floated={false} shadow={false} className="rounded-none">
           <div className="mb-8 flex items-center justify-between gap-8">

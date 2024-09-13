@@ -1,5 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { Card, CardHeader, Typography, CardBody, Chip } from "@material-tailwind/react";
+import React, { useEffect, useState } from "react";
+import {
+  Card,
+  CardHeader,
+  Typography,
+  CardBody,
+  Chip,
+} from "@material-tailwind/react";
+import Logout from "./Logout";
 
 // Define los encabezados y las filas de la tabla
 const TABLE_HEAD = ["Hora de Llegada", "Fecha de Llegada", "¿Llegó Tarde?"];
@@ -27,22 +34,24 @@ const isLate = (timeString) => {
 export default function SortableTable() {
   const [attendanceData, setAttendanceData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const userData = localStorage.getItem('userData');
+  const userData = localStorage.getItem("userData");
   const user = JSON.parse(userData);
   const userId = user ? user.id : null;
 
   useEffect(() => {
     const fetchAttendanceData = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/api/attendance/user/${userId}`);
+        const response = await fetch(
+          `http://localhost:5000/api/attendance/user/${userId}`
+        );
         if (response.ok) {
           const data = await response.json();
           setAttendanceData(data.attendance);
         } else {
-          console.error('Error al obtener los datos de asistencia');
+          console.error("Error al obtener los datos de asistencia");
         }
       } catch (error) {
-        console.error('Error en la solicitud:', error);
+        console.error("Error en la solicitud:", error);
       } finally {
         setLoading(false);
       }
@@ -56,7 +65,10 @@ export default function SortableTable() {
   if (loading) return <div>Cargando...</div>;
 
   return (
-    <div className="pt-16">
+    <div className="pt-16 relative">
+      <div className=" px-3">
+        <Logout />
+      </div>
       <Card className="h-full w-full">
         <CardHeader floated={false} shadow={false} className="rounded-none">
           <div className="mb-8 flex items-center justify-between gap-8">
@@ -65,7 +77,10 @@ export default function SortableTable() {
                 Reporte de llegadas
               </Typography>
               <Typography color="gray" className="mt-1 font-normal">
-                Información de las asistencias del empleado {user.username || "Desconocido"}
+                Información de las asistencias del empleado{" "}
+                <span className="font-bold text-xl">
+                  {user.username || "Desconocido"}
+                </span>
               </Typography>
             </div>
           </div>
