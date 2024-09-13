@@ -1,4 +1,4 @@
-# Prueba Tecnica Bull Marketing
+# Frontend prueba tec. Bull Marketing
 
 Proyecto React.js para gestionar y visualizar datos de registro de usuarios a la hora de entrada mediante un sistema de inicio de sesión y registro de usuarios. Este proyecto brinda acceso a los usuarios para explorar y examinar las horas de ingreso a trabajar
 
