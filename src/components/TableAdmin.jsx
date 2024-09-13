@@ -7,9 +7,15 @@ import {
   Chip,
 } from "@material-tailwind/react";
 import { getAttendanceAll } from '../services/apiService.js';
+
+// Encabezados de la tabla
 const TABLE_HEAD = ["Nombre del empleado", "Hora de Llegada", "Fecha de Llegada", "¿Llegó Tarde?"];
 
-// Helper function to determine if arrival is late
+/**
+ * Función auxiliar para determinar si la llegada es tarde.
+ * @param {string} timeString - La hora de llegada en formato "HH:MM AM/PM".
+ * @returns {boolean} - Retorna true si la llegada es tarde, de lo contrario false.
+ */
 const isLate = (timeString) => {
   const [time, period] = timeString.split(" ");
   const [hours, minutes] = time.split(":").map(Number);
@@ -30,11 +36,16 @@ const isLate = (timeString) => {
   return arrivalTime > thresholdTime;
 };
 
-export default function SortableTable() {
+/**
+ * Componente que muestra una tabla con el reporte de llegadas de los empleados.
+ * Incluye información sobre el nombre del empleado, la hora y fecha de llegada, y si llegó tarde.
+ */
+export default function TableAdmin() {
   const [rows, setRows] = useState([]); // Inicializa con un array vacío
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // Hook para obtener los datos de asistencia al montar el componente
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -50,6 +61,7 @@ export default function SortableTable() {
     fetchData();
   }, []);
 
+  // Renderiza el estado de carga o error
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 
@@ -75,7 +87,7 @@ export default function SortableTable() {
                 {TABLE_HEAD.map((head) => (
                   <th
                     key={head}
-                    className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50 "
+                    className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50"
                   >
                     <Typography
                       variant="small"
@@ -138,7 +150,7 @@ export default function SortableTable() {
               ) : (
                 <tr>
                   <td colSpan={4} className="text-center p-4">
-                    No attendance records available
+                    No hay registros de asistencia disponibles
                   </td>
                 </tr>
               )}
