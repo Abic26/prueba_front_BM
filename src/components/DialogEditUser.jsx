@@ -54,7 +54,7 @@ const DialogEditUser = ({ user, onSuccess }) => {
   const handleSelectChange = (e) => {
     setFormData((prevData) => ({
       ...prevData,
-      role: e.target.value,
+      role: e,
     }));
   };
 
