@@ -1,4 +1,4 @@
-# Prueba Tecnica Grupo Alianza
+# Prueba Tecnica Bull Marketing
 
 Proyecto React.js para gestionar y visualizar datos de registro de usuarios a la hora de entrada mediante un sistema de inicio de sesión y registro de usuarios. Este proyecto brinda acceso a los usuarios para explorar y examinar los datos proporcionados por la API externa
 
