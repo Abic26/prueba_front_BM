@@ -45,6 +45,7 @@ npm run dev
 ### rol administrador
 1. el administrador tendra acceso a todos los registros de los empleados
 2. el administrador podra crear, editar, eliminar usuarios
+3. en la tabla "administrar usuarios" tiene una columna llamada acciones la cual tendra dos botones. El boton ✏️ podra editar los datos de los usuarios. el boton 🗑️ podra eliminar el usuario seleccionado
 ### rol empleado
 1. el empleado solo tendra acceso a la tabla con sus registros
 2. al momento de iniciar sesion se creara automaticamente el registro en el endpoind de registro de llegadas
