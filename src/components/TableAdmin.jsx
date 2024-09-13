@@ -7,7 +7,6 @@ import {
   Chip,
 } from "@material-tailwind/react";
 import { getAttendanceAll } from '../services/apiService.js';
-import Logout from "./Logout";
 
 const TABLE_HEAD = ["Nombre del empleado", "Hora de Llegada", "Fecha de Llegada", "¿Llegó Tarde?"];
 
@@ -32,7 +31,7 @@ const isLate = (timeString) => {
   return arrivalTime > thresholdTime;
 };
 
-export default function SortableTable() {
+export default function TableAdmin() {
   const [rows, setRows] = useState([]); // Inicializa con un array vacío
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -57,9 +56,6 @@ export default function SortableTable() {
 
   return (
     <div className="pt-16">
-      <div className=" px-3">
-        <Logout />
-      </div>
       <Card className="h-full w-full">
         <CardHeader floated={false} shadow={false} className="rounded-none">
           <div className="mb-8 flex items-center justify-between gap-8">

@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import TabsSignUpInComponent from "@/components/TabsSignUpInComponent.jsx";
-import TableAdmin from "@/components/TableAdmin.jsx";
+import LayoutAdmin from "@/components/LayoutAdmin.jsx";
 import TableEmployee from "@/components/TableEmployee.jsx";
 import Error403 from "./components/Error403.jsx";
 import ProtectedRoute from "@/ProtectedRoute.jsx";
@@ -14,7 +14,7 @@ const routes = createBrowserRouter([
     path: "/admin",
     element: (
       <ProtectedRoute allowedRoles={["admin"]}>
-        <TableAdmin />
+        <LayoutAdmin />
       </ProtectedRoute>
     ),
   },

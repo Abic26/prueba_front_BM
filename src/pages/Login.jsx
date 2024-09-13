@@ -33,10 +33,10 @@ const Login = () => {
         hour: formattedTime,
       };
       if (userRole === "employee") {
-        console.log("Redirecting to /employee");
+        // console.log("Redirecting to /employee");
         navigate("/employee"); // Redirige al componente TableEmployee
       } else if (userRole === "admin") {
-        console.log("Redirecting to /admin");
+        // console.log("Redirecting to /admin");
         navigate("/admin"); // Redirige al componente TableAdmin
       }
       console.log(attendanceData,
@@ -52,7 +52,7 @@ const Login = () => {
           attendanceResponse.error
         );
       } else {
-        console.log("Asistencia registrada:", attendanceResponse);
+        // console.log("Asistencia registrada:", attendanceResponse);
       }
     } else {
       setMessage(response.error);
