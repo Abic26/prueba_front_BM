@@ -1,4 +1,3 @@
-// src/pages/TableAdminUsers.jsx
 import React, { useState, useEffect } from "react";
 import { PencilIcon, TrashIcon } from "@heroicons/react/24/solid";
 import {
@@ -18,8 +17,13 @@ import { getAllUsers, deleteUser } from "../services/apiService.js";
 import DialogEditUser from "./DialogEditUser.jsx";
 import DialogCreateUser from "./DialogCreateUser.jsx";
 
+// Encabezados de la tabla
 const TABLE_HEAD = ["Usuario del empleado", "Rol del Empleado", "Acciones"];
 
+/**
+ * Componente que muestra una tabla con la lista de usuarios.
+ * Incluye opciones para crear, editar y eliminar usuarios.
+ */
 export default function TableAdminUsers() {
   const [rows, setRows] = useState([]); // Estado para las filas de usuarios
   const [loading, setLoading] = useState(true); // Estado para cargar datos
@@ -35,21 +39,24 @@ export default function TableAdminUsers() {
     fetchData(); // Llama a la función para obtener los datos
   }, []); // [] asegura que este useEffect se ejecute solo una vez al montar el componente
 
+  // Maneja la apertura y cierre del modal de creación de usuario
   const handledCreateOpen = () => {
-    setCreateModalOpen(!editModalOpen); // Alterna el estado del modal de edición
+    setCreateModalOpen(!createModalOpen); // Alterna el estado del modal de creación
   };
 
-  // Función para abrir/cerrar el modal de edición y seleccionar usuario
+  // Maneja la apertura y cierre del modal de edición de usuario y selecciona el usuario
   const handleEditOpen = (user = null) => {
     setSelectedUser(user); // Establece el usuario seleccionado si se pasa un usuario
     setEditModalOpen(!editModalOpen); // Alterna el estado del modal de edición
   };
 
+  // Maneja el éxito de la edición y actualiza la lista de usuarios
   const handleSuccess = async () => {
     await fetchData(); // Re-fetch the data
     handleEditOpen(null); // Cierra el modal de edición
   };
 
+  // Función para obtener los datos de los usuarios
   const fetchData = async () => {
     try {
       const data = await getAllUsers();
@@ -61,6 +68,7 @@ export default function TableAdminUsers() {
     }
   };
 
+  // Maneja la eliminación de un usuario
   const handleDelete = async () => {
     try {
       await deleteUser(deletingUserId);
@@ -73,18 +81,21 @@ export default function TableAdminUsers() {
     }
   };
 
+  // Abre el modal de confirmación de eliminación
   const openDeleteModal = (id) => {
     setDeletingUserId(id); // Establece el ID del usuario a eliminar
     setDeleteModalOpen(true); // Abre el modal de confirmación de eliminación
   };
 
-  if (loading) return <div>Loading...</div>; // Muestra "Loading" mientras se cargan los datos
-  if (error) return <div>Error: {error}</div>; // Muestra el mensaje de error si algo falla
-
+  // Maneja el cierre del modal de creación
   const handlerCloseCreate = (boolean) => {
     setCreateModalOpen(boolean);
-    window.location.reload();
+    window.location.reload(); // Recarga la página para actualizar la lista de usuarios
   };
+
+  // Renderiza el estado de carga o error
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
 
   return (
     <div className="pt-16">
@@ -187,17 +198,17 @@ export default function TableAdminUsers() {
         </CardBody>
       </Card>
 
-      {/* modal crear */}
+      {/* Modal para crear un usuario */}
       <Dialog open={createModalOpen} handler={() => setCreateModalOpen(false)}>
-        <DialogHeader>Editar Usuario</DialogHeader>
+        <DialogHeader>Crear Usuario</DialogHeader>
         <DialogBody>
-          <DialogCreateUser />
+          <DialogCreateUser onClose={handlerCloseCreate} />
         </DialogBody>
         <DialogFooter>
           <Button
             variant="text"
             color="blue-gray"
-            onClick={() => handlerCloseCreate(false)} // Cierra el modal de edición
+            onClick={() => setCreateModalOpen(false)} // Cierra el modal de creación
             className="mr-1"
           >
             <span>Cerrar</span>
@@ -205,7 +216,7 @@ export default function TableAdminUsers() {
         </DialogFooter>
       </Dialog>
 
-      {/* Modal de edición */}
+      {/* Modal de edición de usuario */}
       <Dialog open={editModalOpen} handler={() => setEditModalOpen(false)}>
         <DialogHeader>Editar Usuario</DialogHeader>
         <DialogBody>

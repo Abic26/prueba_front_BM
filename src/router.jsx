@@ -6,10 +6,12 @@ import Error403 from "./components/Error403.jsx";
 import ProtectedRoute from "@/ProtectedRoute.jsx";
 
 const routes = createBrowserRouter([
+  // ruta para el login y el registrar
   {
     path: "/",
     element: <TabsSignUpInComponent />,
   },
+  // ruta para cuando se loguea en rol admin
   {
     path: "/admin",
     element: (
@@ -18,6 +20,8 @@ const routes = createBrowserRouter([
       </ProtectedRoute>
     ),
   },
+  // ruta para cuando se loguea en rol empleado
+
   {
     path: "/employee",
     element: (
@@ -26,6 +30,8 @@ const routes = createBrowserRouter([
       </ProtectedRoute>
     ),
   },
+  // ruta para cuando se loguea y tambia la ruta
+
   {
     path: "/403",
     element: <Error403 />,

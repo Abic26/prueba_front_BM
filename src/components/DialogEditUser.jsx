@@ -9,13 +9,22 @@ import {
 } from "@material-tailwind/react";
 import { updateUser } from "../services/apiService.js";
 
+/**
+ * Componente para editar un usuario existente.
+ * Permite modificar el nombre de usuario, la contraseña y el rol.
+ * @param {Object} props - Propiedades del componente.
+ * @param {Object} props.user - Datos del usuario a editar.
+ * @param {Function} props.onSuccess - Función a llamar después de actualizar el usuario.
+ */
 const DialogEditUser = ({ user, onSuccess }) => {
+  // Estado para almacenar los datos del formulario
   const [formData, setFormData] = useState({
     username: "",
     password: "",
     role: "employee",
   });
 
+  // Efecto para inicializar el formulario con los datos del usuario
   useEffect(() => {
     if (user) {
       setFormData({
@@ -26,6 +35,10 @@ const DialogEditUser = ({ user, onSuccess }) => {
     }
   }, [user]);
 
+  /**
+   * Maneja los cambios en los campos del formulario.
+   * @param {Object} e - Evento del formulario.
+   */
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -34,18 +47,25 @@ const DialogEditUser = ({ user, onSuccess }) => {
     }));
   };
 
-  // Manejador específico para Select
-  const handleSelectChange = (value) => {
+  /**
+   * Maneja los cambios en el campo de selección de rol.
+   * @param {Object} e - Evento de selección.
+   */
+  const handleSelectChange = (e) => {
     setFormData((prevData) => ({
       ...prevData,
-      role: value,
+      role: e.target.value,
     }));
   };
 
+  /**
+   * Maneja el envío del formulario para actualizar el usuario.
+   * @param {Object} e - Evento del formulario.
+   */
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const updatedUser = await updateUser(user.id, formData);
+      const updatedUser = await updateUser(user.id, formData); // Envía los datos actualizados al servicio
       console.log("Usuario actualizado:", updatedUser);
       onSuccess(); // Llama a la función onSuccess después de actualizar
     } catch (error) {
@@ -55,7 +75,7 @@ const DialogEditUser = ({ user, onSuccess }) => {
 
   return (
     <div className="flex items-center justify-center">
-      <Card color="transparent" shadow={false} className="w-full">
+      <Card color="transparent" shadow={false} className="w-full max-w-md p-6">
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <Input
             label="Nombre de usuario"
@@ -74,7 +94,7 @@ const DialogEditUser = ({ user, onSuccess }) => {
           />
           <Select
             value={formData.role}
-            onChange={(e) => handleSelectChange(e)}
+            onChange={handleSelectChange}
             className="mb-4"
             label="Rol"
           >

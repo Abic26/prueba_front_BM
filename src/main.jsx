@@ -13,6 +13,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <ThemeProvider>
       <AuthProvider>
+        {/* router de la app */}
         <RouterProvider router={router} />
       </AuthProvider>
     </ThemeProvider>

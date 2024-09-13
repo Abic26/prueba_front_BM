@@ -8,9 +8,14 @@ import {
 } from "@material-tailwind/react";
 import Logout from "./Logout";
 
-// Define los encabezados y las filas de la tabla
+// Encabezados de la tabla
 const TABLE_HEAD = ["Hora de Llegada", "Fecha de Llegada", "¿Llegó Tarde?"];
 
+/**
+ * Determina si una hora de llegada es tarde en comparación con las 8:00 AM.
+ * @param {string} timeString - La hora en formato de 12 horas (ej. "8:30 AM").
+ * @returns {boolean} - Retorna verdadero si llegó tarde, falso en caso contrario.
+ */
 const isLate = (timeString) => {
   const [time, period] = timeString.split(" ");
   const [hours, minutes] = time.split(":").map(Number);
@@ -32,12 +37,13 @@ const isLate = (timeString) => {
 };
 
 export default function SortableTable() {
-  const [attendanceData, setAttendanceData] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [attendanceData, setAttendanceData] = useState([]); // Datos de asistencia
+  const [loading, setLoading] = useState(true); // Estado de carga
   const userData = localStorage.getItem("userData");
   const user = JSON.parse(userData);
   const userId = user ? user.id : null;
 
+  // Fetch de datos de asistencia al montar el componente
   useEffect(() => {
     const fetchAttendanceData = async () => {
       try {
@@ -66,7 +72,7 @@ export default function SortableTable() {
 
   return (
     <div className="pt-16 relative">
-      <div className=" px-3">
+      <div className="px-3">
         <Logout />
       </div>
       <Card className="h-full w-full">
@@ -89,7 +95,7 @@ export default function SortableTable() {
           <table className="mt-4 w-full min-w-max table-auto text-left">
             <thead>
               <tr>
-                {TABLE_HEAD.map((head, index) => (
+                {TABLE_HEAD.map((head) => (
                   <th
                     key={head}
                     className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50"
@@ -106,44 +112,52 @@ export default function SortableTable() {
               </tr>
             </thead>
             <tbody>
-              {attendanceData.map(({ hour, date }, index) => {
-                const isLast = index === attendanceData.length - 1;
-                const classes = isLast
-                  ? "p-4"
-                  : "p-4 border-b border-blue-gray-50";
+              {attendanceData.length > 0 ? (
+                attendanceData.map(({ hour, date }, index) => {
+                  const isLast = index === attendanceData.length - 1;
+                  const classes = isLast
+                    ? "p-4"
+                    : "p-4 border-b border-blue-gray-50";
 
-                return (
-                  <tr key={hour + date}>
-                    <td className={classes}>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal text-center"
-                      >
-                        {hour}
-                      </Typography>
-                    </td>
-                    <td className={classes}>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal text-center"
-                      >
-                        {date}
-                      </Typography>
-                    </td>
-                    <td className={classes}>
-                      <Chip
-                        className="text-center"
-                        variant="ghost"
-                        size="sm"
-                        value={isLate(hour) ? "Tarde" : "A tiempo"}
-                        color={isLate(hour) ? "red" : "green"}
-                      />
-                    </td>
-                  </tr>
-                );
-              })}
+                  return (
+                    <tr key={hour + date}>
+                      <td className={classes}>
+                        <Typography
+                          variant="small"
+                          color="blue-gray"
+                          className="font-normal text-center"
+                        >
+                          {hour}
+                        </Typography>
+                      </td>
+                      <td className={classes}>
+                        <Typography
+                          variant="small"
+                          color="blue-gray"
+                          className="font-normal text-center"
+                        >
+                          {date}
+                        </Typography>
+                      </td>
+                      <td className={classes}>
+                        <Chip
+                          className="text-center"
+                          variant="ghost"
+                          size="sm"
+                          value={isLate(hour) ? "Tarde" : "A tiempo"}
+                          color={isLate(hour) ? "red" : "green"}
+                        />
+                      </td>
+                    </tr>
+                  );
+                })
+              ) : (
+                <tr>
+                  <td colSpan={3} className="text-center p-4">
+                    No hay datos de asistencia disponibles
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
         </CardBody>
