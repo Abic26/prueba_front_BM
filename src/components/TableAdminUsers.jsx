@@ -202,13 +202,13 @@ export default function TableAdminUsers() {
       <Dialog open={createModalOpen} handler={() => setCreateModalOpen(false)}>
         <DialogHeader>Crear Usuario</DialogHeader>
         <DialogBody>
-          <DialogCreateUser onClose={handlerCloseCreate} />
+          <DialogCreateUser />
         </DialogBody>
         <DialogFooter>
           <Button
             variant="text"
             color="blue-gray"
-            onClick={() => setCreateModalOpen(false)} // Cierra el modal de creación
+            onClick={handlerCloseCreate} // Cierra el modal de creación
             className="mr-1"
           >
             <span>Cerrar</span>
