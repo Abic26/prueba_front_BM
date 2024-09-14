@@ -1,5 +1,5 @@
 import React from "react";
-import { useAuth } from "../context/AuthContext.jsx"; // Ajusta la ruta según la ubicación de tu archivo
+import { useAuth } from "../context/AuthContext.jsx";
 import { Button } from "@material-tailwind/react";
 
 /**
