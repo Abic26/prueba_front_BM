@@ -20,8 +20,8 @@ const Logout = () => {
   return (
     <div className="flex justify-end">
       <Button
-        onClick={handleLogout} // Asocia el manejador de clic al botón
-        type="button" // Cambiado a "button" en lugar de "submit" ya que no es un formulario
+        onClick={handleLogout}
+        type="button"
         color="black"
         className="hover:bg-white hover:text-black"
       >
